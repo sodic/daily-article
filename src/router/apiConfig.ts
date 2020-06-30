@@ -1,19 +1,20 @@
 import { ApiConfig, HttpMethod } from './types';
-import * as Controller from '../controller';
+import * as Api from 'api';
 
 export default {
 	[HttpMethod.Get]: {
-		'/random': Controller.getRandomArticle,
-		'/': Controller.getArticleByName,
+		'/:articleName': Api.getArticleByName,
+		'/': Api.getRandomArticle,
 	},
 	[HttpMethod.Head]: {
 	},
 	[HttpMethod.Post]: {
-		'/post': Controller.addArticle,
+		'/:articleName': Api.addRead,
 	},
 	[HttpMethod.Put]: {
 	},
 	[HttpMethod.Delete]: {
+		'/:articleName': Api.deleteRead,
 	},
 	[HttpMethod.Connect]: {
 	},

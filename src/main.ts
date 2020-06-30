@@ -5,7 +5,7 @@ import router from 'router';
 
 function buildExpressApp() {
 	const app = express();
-	app.use('/articles', router);
+	app.use('/article', router);
 	return app;
 }
 

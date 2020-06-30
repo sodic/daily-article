@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { HttpMethod } from './types';
-import serverConfig from './serverConfig';
+import serverConfig from './apiConfig';
 
 function buildRouter() {
 	const router = Router();

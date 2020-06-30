@@ -6,7 +6,9 @@
   "scripts": {
     "build": "node_modules/typescript/bin/tsc",
     "start": "NODE_PATH=dist node dist/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildAndStart": "npm run build && npm run start",
+    "live": "NODE_PATH=dist nodemon -e ts --exec 'npm run buildAndStart'"
   },
   "author": "sodic",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "eslint": "^7.3.1",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
+    "module-alias": "^2.2.2",
     "typescript": "^3.9.5"
   },
   "dependencies": {

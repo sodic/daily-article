@@ -1,4 +1,4 @@
-import { Article } from '../../Article';
+import Article from 'api/types/Article';
 
 export default [
 	{

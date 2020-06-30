@@ -29,10 +29,23 @@
         /* Redirect output structure to this directory */
         "outDir": "dist",
 
-
         /* Disallow inconsistently-cased references to the same file. */
         "forceConsistentCasingInFileNames": true
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "paths": {
+        "controller/*": [
+            "controller/*"
+        ],
+        "config/*": [
+            "config/*"
+        ],
+        "storage/*": [
+            "storage/*"
+        ],
+        "service/*": [
+            "service/*"
+        ]
+    }
 }

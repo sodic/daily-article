@@ -1,5 +1,5 @@
-import { createDummyStorage } from './implementations/dummy/Dummy';
+import Dummy from './dummy/Dummy';
 
 export function getStorage() {
-	return createDummyStorage() ;
+	return new Dummy();
 }
