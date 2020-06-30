@@ -6,22 +6,16 @@ export default {
 		'/:articleName': Api.getArticleByName,
 		'/': Api.getRandomArticle,
 	},
-	[HttpMethod.Head]: {
-	},
 	[HttpMethod.Post]: {
 		'/:articleName': Api.addRead,
-	},
-	[HttpMethod.Put]: {
 	},
 	[HttpMethod.Delete]: {
 		'/:articleName': Api.deleteRead,
 	},
-	[HttpMethod.Connect]: {
-	},
-	[HttpMethod.Options]: {
-	},
-	[HttpMethod.Trace]: {
-	},
-	[HttpMethod.Patch]: {
-	},
+	[HttpMethod.Head]: {},
+	[HttpMethod.Put]: {},
+	[HttpMethod.Connect]: {},
+	[HttpMethod.Options]: {},
+	[HttpMethod.Trace]: {},
+	[HttpMethod.Patch]: {},
 } as ApiConfig;
