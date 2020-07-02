@@ -13,28 +13,28 @@ const responseFor: Record<OperationStatus, (r: Response) => void> = {
 
 const articleService = getArticleService(getStorage());
 
-export function getRandomArticle(req: Request, res: Response): void {
-	const article = articleService.getRandomArticle();
-	res.json(article);
-	// res.redirect(url);
+function sendErrorResponse(res: Response, message: string, status :400 | 500 = 400) {
+	sendResponse(res, message, status);
 }
 
 function sendResponse(res: Response, message: string, status: number) {
 	res.status(status).send(message);
 }
 
-function sendErrorResponse(res: Response, message: string, status :400 | 500 = 400) {
-	sendResponse(res, message, status);
+export async function getRandomArticle(req: Request, res: Response): Promise<void> {
+	const article = await articleService.getRandomArticle();
+	res.json(article);
+	// res.redirect(url);
 }
 
-export function getArticleByName(req: Request, res: Response): void {
+export async function getArticleByName(req: Request, res: Response): Promise<void> {
 	const name = req.params.articleName;
 	if (!name) {
 		sendErrorResponse(res, Message.MissingArticleName);
 		return;
 	}
 
-	const article = articleService.getArticleByName(name as string);
+	const article = await articleService.getArticleByName(name as string);
 	if (!article) {
 		sendErrorResponse(res, Message.InvalidArticleName);
 		return;
@@ -44,24 +44,24 @@ export function getArticleByName(req: Request, res: Response): void {
 	// res.redirect(article.url);
 }
 
-export function addRead(req: Request, res: Response): void {
+export async function addRead(req: Request, res: Response): Promise<void> {
 	const name = req.params.articleName;
 	if (!name) {
 		sendErrorResponse(res, Message.MissingArticleName);
 		return;
 	}
 
-	const status = articleService.markArticleAsRead(name);
+	const status = await articleService.markArticleAsRead(name);
 	responseFor[status](res);
 }
 
-export function deleteRead(req: Request, res: Response): void {
+export async function deleteRead(req: Request, res: Response): Promise<void> {
 	const name = req.params.articleName;
 	if (!name) {
 		sendErrorResponse(res, Message.MissingArticleName);
 		return;
 	}
 
-	const status = articleService.markArticleAsUnread(name);
+	const status = await articleService.markArticleAsUnread(name);
 	responseFor[status](res);
 }

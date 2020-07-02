@@ -1,5 +1,4 @@
 import Service from 'api/types/Service';
-import Article from 'api/types/Article';
 import OperationStatus from 'api/types/OperationStatus';
 import Storage from 'service/types/Storage';
 import StorageStatus from 'service/types/StorageStatus';
@@ -7,41 +6,42 @@ import StorageStatus from 'service/types/StorageStatus';
 const operationStatusFor: Record<StorageStatus, OperationStatus> = {
 	[StorageStatus.NoChanges]: OperationStatus.NoChanges,
 	[StorageStatus.Success]: OperationStatus.Success,
+	[StorageStatus.UnkownError]: OperationStatus.UnexpectedError,
 };
 
 export default function createArticleService(storage: Storage): Service {
 	return {
-		getArticleByName(name: string): Article | null {
+		getArticleByName(name: string) {
 			return storage.getArticleByName(name);
 		},
 
-		getRandomArticle(): Article {
-			const articles = storage.getAllArticles();
+		async getRandomArticle() {
+			const articles = await storage.getAllArticles();
 			return articles[Math.floor(Math.random() * articles.length)];
 		},
 
-		markArticleAsRead(name: string): OperationStatus {
-			const article = storage.getArticleByName(name);
+		async markArticleAsRead(name: string) {
+			const article = await storage.getArticleByName(name);
 			if (!article) {
 				return OperationStatus.InvalidArticleName;
 			}
 
 			try {
-				const storageStatus = storage.setArticleRead(article);
+				const storageStatus = await storage.setArticleRead(article);
 				return operationStatusFor[storageStatus];
 			} catch (e) {
 				return OperationStatus.UnexpectedError;
 			}
 		},
 
-		markArticleAsUnread(name: string): OperationStatus {
-			const article = storage.getArticleByName(name);
+		async markArticleAsUnread(name: string) {
+			const article = await storage.getArticleByName(name);
 			if (!article) {
 				return OperationStatus.InvalidArticleName;
 			}
 
 			try {
-				const storageStatus = storage.setArticleUnread(article);
+				const storageStatus = await storage.setArticleUnread(article);
 				return operationStatusFor[storageStatus];
 			} catch (e) {
 				return OperationStatus.UnexpectedError;

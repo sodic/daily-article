@@ -1,5 +1,6 @@
-import Dummy from './dummy/Dummy';
+import Storage from 'service/types/Storage';
+import FileStorage from './FileStorage';
 
-export function getStorage() {
-	return new Dummy();
+export function getStorage(): Storage {
+	return new FileStorage('resources/articles.json', 'resources/read.json');
 }
