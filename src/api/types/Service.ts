@@ -1,9 +1,9 @@
-import Article from './Article';
+import ArticleDto from './ArticleDto';
 import OperationStatus from './OperationStatus';
 
 export default interface Service {
-    getRandomArticle(): Awaitable<Article>;
-    getArticleByName(name: string): Awaitable<Article | null>;
+    getRandomArticle(): Awaitable<ArticleDto>;
+    getArticleByName(name: string): Awaitable<ArticleDto | null>;
     markArticleAsRead(name: string): Awaitable<OperationStatus>;
     markArticleAsUnread(name: string): Awaitable<OperationStatus>;
 }

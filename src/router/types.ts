@@ -13,4 +13,4 @@ export const enum HttpMethod {
 
 }
 export type PathConfig = Record<string, RequestHandler>
-export type ApiConfig = Record<HttpMethod, PathConfig>;
+export type RouterConfig = Record<HttpMethod, PathConfig>;

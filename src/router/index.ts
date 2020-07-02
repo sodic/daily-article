@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { HttpMethod } from './types';
-import serverConfig from './apiConfig';
+import routerConfig from './config';
 
 function createRouter() {
 	const router = Router();
@@ -17,7 +17,7 @@ function createRouter() {
 		[HttpMethod.Patch]: router.patch.bind(router),
 	};
 
-	Object.entries(serverConfig).forEach(([ method, pathConfig]) => {
+	Object.entries(routerConfig).forEach(([ method, pathConfig]) => {
 		Object.entries(pathConfig).forEach(([ path, controller ]) => {
 			const register = methodMap[method as HttpMethod];
 			register(path, controller);

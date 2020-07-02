@@ -1,4 +1,4 @@
-import Article from 'api/types/Article';
+import ArticleDto from 'api/types/ArticleDto';
 
 export default [
 	{
@@ -2129,4 +2129,4 @@ export default [
 		'term': 'Join the MDN community',
 		'url': 'https://developer.mozilla.org/en-US/docs/MDN/Community',
 	},
-] as Article[];
+] as ArticleDto[];

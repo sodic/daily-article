@@ -1,4 +1,4 @@
-import { ApiConfig, HttpMethod } from './types';
+import { RouterConfig, HttpMethod } from './types';
 import * as Api from 'api';
 
 export default {
@@ -18,4 +18,4 @@ export default {
 	[HttpMethod.Options]: {},
 	[HttpMethod.Trace]: {},
 	[HttpMethod.Patch]: {},
-} as ApiConfig;
+} as RouterConfig;

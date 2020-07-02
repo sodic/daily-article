@@ -1,19 +1,19 @@
 import articles from './articles';
 import Storage from 'service/types/Storage';
-import Article from 'api/types/Article';
+import ArticleDto from 'api/types/ArticleDto';
 import StorageStatus from 'service/types/StorageStatus';
 
 export default class Dummy implements Storage {
 
-	private readonly allArticles: Article[];
-	private readTerms: Set<string>;
+	private readonly allArticles: ArticleDto[];
+	private readonly readTerms: Set<string>;
 
 	constructor() {
 		this.allArticles = articles;
 		this.readTerms = new Set();
 	}
 
-	public setArticleUnread(article: Article): StorageStatus {
+	public setArticleUnread(article: ArticleDto): StorageStatus {
 		if (!this.readTerms.has(article.term)) {
 			return StorageStatus.NoChanges;
 		}
@@ -22,7 +22,7 @@ export default class Dummy implements Storage {
 		return StorageStatus.Success;
 	}
 
-	public setArticleRead(article: Article): StorageStatus {
+	public setArticleRead(article: ArticleDto): StorageStatus {
 		if (this.readTerms.has(article.term)) {
 			return StorageStatus.NoChanges;
 		}
@@ -31,11 +31,11 @@ export default class Dummy implements Storage {
 		return StorageStatus.Success;
 	}
 
-	public getAllArticles(): Article[] {
+	public getAllArticles(): ArticleDto[] {
 		return this.allArticles;
 	}
 
-	public getArticleByName(term: string): Article | null {
+	public getArticleByName(term: string): ArticleDto | null {
 		return this.allArticles.find(article => article.term === term) || null;
 	}
 }
