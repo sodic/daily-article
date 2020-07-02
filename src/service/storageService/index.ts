@@ -9,7 +9,7 @@ const operationStatusFor: Record<StorageStatus, OperationStatus> = {
 	[StorageStatus.UnkownError]: OperationStatus.UnexpectedError,
 };
 
-export default function createArticleService(storage: Storage): Service {
+export default function createStorageService(storage: Storage): Service {
 	return {
 		getArticleByName(name: string) {
 			return storage.getArticleByName(name);

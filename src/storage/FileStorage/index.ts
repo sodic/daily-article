@@ -34,7 +34,7 @@ export default class FileStorage implements Storage {
 		return this.articleMap[name] || null;
 	}
 
-	setArticleRead(article: ArticleModel): Awaitable<StorageStatus> {
+	setArticleRead(article: ArticleModel): Promise<StorageStatus> {
 		return this.updateReadArticles(
 			() => this.readArticles.has(article.term),
 			() => this.readArticles.add(article.term),
@@ -42,7 +42,7 @@ export default class FileStorage implements Storage {
 		);
 	}
 
-	setArticleUnread(article: ArticleModel): Awaitable<StorageStatus> {
+	setArticleUnread(article: ArticleModel): Promise<StorageStatus> {
 		return this.updateReadArticles(
 			() => !this.readArticles.has(article.term),
 			() => this.readArticles.delete(article.term),
