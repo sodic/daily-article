@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { HttpMethod } from './types';
 import serverConfig from './apiConfig';
 
-function buildRouter() {
+function createRouter() {
 	const router = Router();
 
 	const methodMap = {
@@ -27,4 +27,4 @@ function buildRouter() {
 	return router;
 }
 
-export default buildRouter();
+export default createRouter();

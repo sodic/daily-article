@@ -1,7 +1,7 @@
-import IService from 'api/types/IService';
+import Service from 'api/types/Service';
 import Article from 'api/types/Article';
 import OperationStatus from 'api/types/OperationStatus';
-import IStorage from 'service/types/IStorage';
+import Storage from 'service/types/Storage';
 import StorageStatus from 'service/types/StorageStatus';
 
 const operationStatusFor: Record<StorageStatus, OperationStatus> = {
@@ -9,7 +9,7 @@ const operationStatusFor: Record<StorageStatus, OperationStatus> = {
 	[StorageStatus.Success]: OperationStatus.Success,
 };
 
-export default function createArticleService(storage: IStorage): IService {
+export default function createArticleService(storage: Storage): Service {
 	return {
 		getArticleByName(name: string): Article | null {
 			return storage.getArticleByName(name);

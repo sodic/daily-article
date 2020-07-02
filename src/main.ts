@@ -1,15 +1,15 @@
-import * as http from 'http';
-import config from 'config';
+import { createServer }  from 'http';
 import express from 'express';
 import router from 'router';
+import config from 'config';
 
-function buildExpressApp() {
+function createApp() {
 	const app = express();
 	app.use('/article', router);
 	return app;
 }
 
-const app = buildExpressApp();
+const app = createApp();
 
-const httpServer = http.createServer(app);
+const httpServer = createServer(app);
 httpServer.listen(config.port);

@@ -1,9 +1,9 @@
 import articles from './articles';
-import IStorage from 'service/types/IStorage';
+import Storage from 'service/types/Storage';
 import Article from 'api/types/Article';
 import StorageStatus from 'service/types/StorageStatus';
 
-export default class Dummy implements IStorage{
+export default class Dummy implements Storage {
 
 	private readonly allArticles: Article[];
 	private readTerms: Set<string>;
