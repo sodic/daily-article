@@ -1,11 +1,10 @@
-import { promises as fs } from 'fs';
 import Storage from 'service/types/Storage';
 import ArticleModel from 'service/types/ArticleModel';
 import StorageStatus from 'service/types/StorageStatus';
 import {
-	readArray,
-	readSet,
-	serializeSet,
+	readArraySync,
+	readSetSync,
+	writeSet,
 } from './serialization';
 
 type ArticleRecord = Record<string, ArticleModel>;
@@ -16,13 +15,13 @@ export default class FileStorage implements Storage {
 	private readonly readArticlesFile: string;
 
 	constructor(allArticlesFile: string, readArticlesFile: string) {
-		const articles = readArray<ArticleModel>(allArticlesFile);
+		const articles = readArraySync<ArticleModel>(allArticlesFile);
 		this.articleMap = articles.reduce(
 			(record: ArticleRecord, article: ArticleModel) => ({  ...record, [article.term]: article }),
 			{},
 		);
 
-		this.readArticles = readSet(readArticlesFile);
+		this.readArticles = readSetSync(readArticlesFile);
 		this.readArticlesFile = readArticlesFile;
 	}
 
@@ -66,7 +65,7 @@ export default class FileStorage implements Storage {
 
 	private async persistReadArticles() {
 		try {
-			await fs.writeFile(this.readArticlesFile, serializeSet(this.readArticles));
+			await writeSet(this.readArticlesFile, this.readArticles);
 			return StorageStatus.Success;
 		} catch(e) {
 			return StorageStatus.UnkownError;

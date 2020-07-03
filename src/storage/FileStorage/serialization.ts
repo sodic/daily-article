@@ -1,6 +1,6 @@
-import fs from 'fs';
+import fs, { promises as promiseFs } from 'fs';
 
-export function serializeSet<T>(set: Set<T>): string {
+function serializeSet<T>(set: Set<T>): string {
 	return JSON.stringify(Array.from(set));
 }
 
@@ -8,10 +8,14 @@ function deserializeSet<T>(set: string): Set<T> {
 	return new Set(JSON.parse(set));
 }
 
-export function readSet<T>(path: string): Set<T> {
+export function readSetSync<T>(path: string): Set<T> {
 	return deserializeSet(fs.readFileSync(path).toString());
 }
 
-export function readArray<T>(file: string): T[] {
+export function readArraySync<T>(file: string): T[] {
 	return JSON.parse(fs.readFileSync(file).toString());
+}
+
+export function writeSet<T>(path: string, set: Set<T>): Promise<void> {
+	return promiseFs.writeFile(path, serializeSet(set));
 }
