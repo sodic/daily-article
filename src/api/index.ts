@@ -9,7 +9,7 @@ import Message from './types/Message';
 import {
 	sendErrorResponse,
 	sendAppropriateResponse,
-} from './reponseUtils';
+} from './responseUtil';
 
 const articleService = getArticleService(getStorage());
 
@@ -37,11 +37,11 @@ export async function getArticleByName(req: Request, res: Response): Promise<voi
 }
 
 export async function addRead(req: Request, res: Response): Promise<void> {
-	return updateAndRespond(req, res, name => articleService.markArticleAsUnread(name));
+	return updateAndRespond(req, res, name => articleService.markArticleAsRead(name));
 }
 
 export async function deleteRead(req: Request, res: Response): Promise<void> {
-	return updateAndRespond(req, res, name => articleService.markArticleAsRead(name));
+	return updateAndRespond(req, res, name => articleService.markArticleAsUnread(name));
 }
 
 async function updateAndRespond(req: Request, res: Response, update: (name: string) => Awaitable<OperationStatus>) {
