@@ -1,25 +1,17 @@
-import { Request, Response } from 'express';
+import {
+	Request,
+	Response,
+} from 'express';
 import { getStorage } from 'storage/getStorage';
-import OperationStatus from 'api/types/OperationStatus';
 import getArticleService from 'service/storageService';
+import OperationStatus from './types/OperationStatus';
 import Message from './types/Message';
-
-const responseFor: Record<OperationStatus, (r: Response) => void> = {
-	[OperationStatus.NoChanges]: res => sendResponse(res, Message.NoChanges, 200),
-	[OperationStatus.InvalidArticleName]: res => sendErrorResponse(res, Message.MissingArticleName),
-	[OperationStatus.UnexpectedError]: res => sendErrorResponse(res, Message.UnexpectedError, 500),
-	[OperationStatus.Success]: res => sendResponse(res, Message.Success, 200),
-};
+import {
+	sendErrorResponse,
+	sendAppropriateResponse,
+} from './reponseUtils';
 
 const articleService = getArticleService(getStorage());
-
-function sendErrorResponse(res: Response, message: string, status :400 | 500 = 400) {
-	sendResponse(res, message, status);
-}
-
-function sendResponse(res: Response, message: string, status: number) {
-	res.status(status).send(message);
-}
 
 export async function getRandomArticle(req: Request, res: Response): Promise<void> {
 	const article = await articleService.getRandomArticle();
@@ -45,23 +37,20 @@ export async function getArticleByName(req: Request, res: Response): Promise<voi
 }
 
 export async function addRead(req: Request, res: Response): Promise<void> {
-	const name = req.params.articleName;
-	if (!name) {
-		sendErrorResponse(res, Message.MissingArticleName);
-		return;
-	}
-
-	const status = await articleService.markArticleAsRead(name);
-	responseFor[status](res);
+	return updateAndRespond(req, res, name => articleService.markArticleAsUnread(name));
 }
 
 export async function deleteRead(req: Request, res: Response): Promise<void> {
+	return updateAndRespond(req, res, name => articleService.markArticleAsRead(name));
+}
+
+async function updateAndRespond(req: Request, res: Response, update: (name: string) => Awaitable<OperationStatus>) {
 	const name = req.params.articleName;
 	if (!name) {
 		sendErrorResponse(res, Message.MissingArticleName);
 		return;
 	}
 
-	const status = await articleService.markArticleAsUnread(name);
-	responseFor[status](res);
+	const status = await update(name);
+	sendAppropriateResponse(res, status);
 }
