@@ -3,6 +3,10 @@ import OperationStatus from 'api/types/OperationStatus';
 import Storage from 'service/types/Storage';
 import StorageStatus from 'service/types/StorageStatus';
 
+function randomChoice<T>(array: T[]) {
+	return array[Math.floor(Math.random() * array.length)];
+}
+
 const operationStatusFor: Record<StorageStatus, OperationStatus> = {
 	[StorageStatus.NoChanges]: OperationStatus.NoChanges,
 	[StorageStatus.Success]: OperationStatus.Success,
@@ -17,7 +21,7 @@ export default function createStorageService(storage: Storage): Service {
 
 		async getRandomArticle() {
 			const articles = await storage.getAllArticles();
-			return articles[Math.floor(Math.random() * articles.length)];
+			return randomChoice(articles);
 		},
 
 		async markArticleAsRead(name: string) {
