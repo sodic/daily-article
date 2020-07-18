@@ -11,17 +11,6 @@ import {
 	sendAppropriateResponse,
 } from './responseUtil';
 
-async function updateAndRespond(req: Request, res: Response, update: (name: string) => Awaitable<OperationStatus>) {
-	const name = req.params.articleName;
-	if (!name) {
-		sendErrorResponse(res, Message.MissingArticleName);
-		return;
-	}
-
-	const status = await update(name);
-	sendAppropriateResponse(res, status);
-}
-
 export default function articleApi(articleService: Service): Api {
 	async function getRandomArticle(req: Request, res: Response) {
 		const article = await articleService.getRandomArticle();
@@ -60,4 +49,15 @@ export default function articleApi(articleService: Service): Api {
 		addRead,
 		deleteRead,
 	};
+}
+
+async function updateAndRespond(req: Request, res: Response, update: (name: string) => Awaitable<OperationStatus>) {
+	const name = req.params.articleName;
+	if (!name) {
+		sendErrorResponse(res, Message.MissingArticleName);
+		return;
+	}
+
+	const status = await update(name);
+	sendAppropriateResponse(res, status);
 }
