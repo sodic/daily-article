@@ -2,7 +2,7 @@ import { Response } from 'express';
 import OperationStatus from './types/OperationStatus';
 import Message from './types/Message';
 
-export function sendErrorResponse(res: Response, message: string, status: 400 | 500 = 400) {
+export function sendErrorResponse(res: Response, message: string, status: 400 | 500 = 400): void {
 	sendResponse(res, message, status);
 }
 export function sendAppropriateResponse(res: Response, operationStatus: OperationStatus): void {

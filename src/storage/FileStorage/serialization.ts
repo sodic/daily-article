@@ -1,7 +1,7 @@
 import fs, { promises as promiseFs } from 'fs';
 
 function serializeSet<T>(set: Set<T>): string {
-	return JSON.stringify(Array.from(set));
+	return JSON.stringify([...set]);
 }
 
 function deserializeSet<T>(set: string): Set<T> {
