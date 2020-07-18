@@ -1,6 +1,6 @@
 import { Response } from 'express';
-import OperationStatus from './types/OperationStatus';
-import Message from './types/Message';
+import OperationStatus from 'api/types/OperationStatus';
+import Message from 'api/types/Message';
 
 export function sendErrorResponse(res: Response, message: string, status: 400 | 500 = 400): void {
 	sendResponse(res, message, status);

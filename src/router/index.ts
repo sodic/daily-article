@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { HttpMethod } from './types';
-import routerConfig from './config';
+import {
+	Api,
+	HttpMethod,
+	RouteDefinition,
+} from './types';
+import defineRoutes from './routes';
 
-function createRouter() {
-	const router = Router();
-
+function registerRoutes(router: Router, routeDefinition: RouteDefinition): Router {
 	const methodMap = {
 		[HttpMethod.Get]: router.get.bind(router),
 		[HttpMethod.Head]: router.head.bind(router),
@@ -17,14 +19,21 @@ function createRouter() {
 		[HttpMethod.Patch]: router.patch.bind(router),
 	};
 
-	Object.entries(routerConfig).forEach(([ method, pathConfig]) => {
-		Object.entries(pathConfig).forEach(([ path, controller ]) => {
+	Object.entries(routeDefinition).forEach(([ method, pathDefinitions]) => {
+		Object.entries(pathDefinitions).forEach(([ path, handler ]) => {
 			const register = methodMap[method as HttpMethod];
-			register(path, controller);
+			register(path, handler);
 		});
 	});
 
 	return router;
 }
 
-export default createRouter();
+function router(apiImplementation: Api): Router {
+	const router = Router();
+	const routeDefinitions = defineRoutes(apiImplementation);
+
+	return registerRoutes(router, routeDefinitions);
+}
+
+export default router;
