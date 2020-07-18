@@ -29,11 +29,10 @@ function registerRoutes(router: Router, routeDefinition: RouteDefinition): Route
 	return router;
 }
 
-function router(apiImplementation: Api): Router {
+export default function router(apiImplementation: Api): Router {
 	const router = Router();
 	const routeDefinitions = defineRoutes(apiImplementation);
 
 	return registerRoutes(router, routeDefinitions);
 }
 
-export default router;

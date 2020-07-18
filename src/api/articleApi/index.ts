@@ -23,36 +23,41 @@ async function updateAndRespond(req: Request, res: Response, update: (name: stri
 }
 
 export default function articleApi(articleService: Service): Api {
+	async function getRandomArticle(req: Request, res: Response) {
+		const article = await articleService.getRandomArticle();
+		res.json(article);
+		// res.redirect(url);
+	}
+
+	async function getArticleByName(req: Request, res: Response) {
+		const name = req.params.articleName;
+		if (!name) {
+			sendErrorResponse(res, Message.MissingArticleName);
+			return;
+		}
+
+		const article = await articleService.getArticleByName(name);
+		if (!article) {
+			sendErrorResponse(res, Message.InvalidArticleName);
+			return;
+		}
+
+		res.json(article);
+		// res.redirect(article.url);
+	}
+
+	function addRead(req: Request, res: Response) {
+		return updateAndRespond(req, res, name => articleService.markArticleAsRead(name));
+	}
+
+	function deleteRead(req: Request, res: Response) {
+		return updateAndRespond(req, res, name => articleService.markArticleAsUnread(name));
+	}
+
 	return {
-		async getRandomArticle(req: Request, res: Response): Promise<void> {
-			const article = await articleService.getRandomArticle();
-			res.json(article);
-			// res.redirect(url);
-		},
-
-		async getArticleByName(req: Request, res: Response): Promise<void> {
-			const name = req.params.articleName;
-			if (!name) {
-				sendErrorResponse(res, Message.MissingArticleName);
-				return;
-			}
-
-			const article = await articleService.getArticleByName(name as string);
-			if (!article) {
-				sendErrorResponse(res, Message.InvalidArticleName);
-				return;
-			}
-
-			res.json(article);
-			// res.redirect(article.url);
-		},
-
-		async addRead(req: Request, res: Response): Promise<void> {
-			return updateAndRespond(req, res, name => articleService.markArticleAsRead(name));
-		},
-
-		async deleteRead(req: Request, res: Response): Promise<void> {
-			return updateAndRespond(req, res, name => articleService.markArticleAsUnread(name));
-		},
+		getRandomArticle,
+		getArticleByName,
+		addRead,
+		deleteRead,
 	};
 }
