@@ -15,7 +15,7 @@ function sendResponse(res: Response, message: string, status: number) {
 
 const responseFor: Record<OperationStatus, (r: Response) => void> = {
 	[OperationStatus.NoChanges]: res => sendResponse(res, Message.NoChanges, 200),
-	[OperationStatus.InvalidArticleName]: res => sendErrorResponse(res, Message.MissingArticleName),
+	[OperationStatus.InvalidArticleName]: res => sendErrorResponse(res, Message.InvalidArticleName),
 	[OperationStatus.UnexpectedError]: res => sendErrorResponse(res, Message.UnexpectedError, 500),
 	[OperationStatus.Success]: res => sendResponse(res, Message.Success, 200),
 };
