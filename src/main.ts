@@ -13,6 +13,8 @@ function createApp() {
 	const routerImplementation = router(api);
 
 	const app = express();
+	app.disable('x-powered-by');
+	app.disable('etag');
 	app.use('/', routerImplementation);
 
 	return app;
