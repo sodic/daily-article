@@ -1,5 +1,14 @@
 #!/bin/sh
 
+check_dependencies () {
+    if ! (
+        node -v > /dev/null && npm -v > /dev/null && pidof systemd > /dev/null
+    ); then
+        echo "Make sure node and npm are in scope, ensure systemd is running"
+        exit
+    fi
+}
+
 create_service () {
     echo "Creating a systemd service file."
     sed -e "s|#project_root#|$PWD|" daily-article.service.template \
@@ -45,6 +54,7 @@ choice () {
 }
 
 main() {
+    check_dependencies
     create_service
     choice "Enable the service on startup?" enable_on_startup stop_installation
     choice "Start the service now?" start_service exit
