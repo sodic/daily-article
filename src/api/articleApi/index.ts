@@ -14,8 +14,7 @@ import {
 export default function articleApi(articleService: Service): Api {
 	async function getRandomArticle(req: Request, res: Response) {
 		const article = await articleService.getRandomArticle();
-		res.json(article);
-		// res.redirect(url);
+		sendArticle(res, article);
 	}
 
 	async function getArticleByName(req: Request, res: Response) {
@@ -31,8 +30,7 @@ export default function articleApi(articleService: Service): Api {
 			return;
 		}
 
-		res.json(article);
-		// res.redirect(article.url);
+		sendArticle(res, article);
 	}
 
 	function addRead(req: Request, res: Response) {
@@ -49,6 +47,11 @@ export default function articleApi(articleService: Service): Api {
 		addRead,
 		deleteRead,
 	};
+}
+
+function sendArticle(res: Response, article: Article) {
+	// res.json(article);
+	res.redirect(307, article.url);
 }
 
 async function updateAndRespond(req: Request, res: Response, update: (name: string) => Awaitable<OperationStatus>) {
