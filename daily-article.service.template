@@ -1,0 +1,9 @@
+[Unit]
+Description=Serve MDN articles.
+
+[Service]
+Type=simple
+ExecStart=npm --prefix #project_root# start
+
+[Install]
+WantedBy=multi-user.target
