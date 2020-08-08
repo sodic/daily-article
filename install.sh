@@ -56,6 +56,7 @@ choice () {
 main() {
     check_dependencies
     npm install
+    npm run build
     create_service
     choice "Enable the service on startup?" enable_on_startup stop_installation
     choice "Start the service now?" start_service exit
