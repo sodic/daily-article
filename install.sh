@@ -11,8 +11,11 @@ check_dependencies () {
 
 create_service () {
     echo "Creating a systemd service file."
-    sed -e "s|#project_root#|$PWD|" daily-article.service.template \
+
+    start_script="$(command -v npm) --prefix $PWD start"
+    sed -e "s|#start_script#|$start_script|" daily-article.service.template \
         > daily-article.service
+
     sudo cp daily-article.service /etc/systemd/system/
     sudo chmod 644 /etc/systemd/system/daily-article.service
 }

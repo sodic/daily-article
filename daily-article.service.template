@@ -3,7 +3,7 @@ Description=Serve MDN articles.
 
 [Service]
 Type=simple
-ExecStart=npm --prefix #project_root# start
+ExecStart=#start_script#
 
 [Install]
 WantedBy=multi-user.target
