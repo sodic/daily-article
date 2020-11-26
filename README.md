@@ -1,5 +1,5 @@
 # daily-article
-Serve a random article from MDN's glossary on each browser startup.
+Serve a random article from [MDN's glossary](https://developer.mozilla.org/en-US/docs/Glossary) on each browser startup.
 
 ## Dependencies
 - npm
