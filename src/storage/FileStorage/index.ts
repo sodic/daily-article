@@ -35,7 +35,7 @@ export default class FileStorage implements Storage {
 
 	setArticleRead(article: ArticleModel): Promise<StorageStatus> {
 		return this.updateReadArticles(
-			() => this.readArticles.has(article.term),
+			() => !this.readArticles.has(article.term),
 			() => this.readArticles.add(article.term),
 			() => this.readArticles.delete(article.term),
 		);
@@ -43,14 +43,14 @@ export default class FileStorage implements Storage {
 
 	setArticleUnread(article: ArticleModel): Promise<StorageStatus> {
 		return this.updateReadArticles(
-			() => !this.readArticles.has(article.term),
+			() => this.readArticles.has(article.term),
 			() => this.readArticles.delete(article.term),
 			() => this.readArticles.add(article.term),
 		);
 	}
 
 	private async updateReadArticles(isApplicable: () => boolean, update: () => void, rollback: () => void) {
-		if (isApplicable()) {
+		if (!isApplicable()) {
 			return StorageStatus.NoChanges;
 		}
 
