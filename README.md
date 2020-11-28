@@ -13,7 +13,7 @@ $ git clone https://github.com/sodic/daily-article
 $ cd daily-article
 $ ./install.sh
 ````
-2. Set your browser's startup page to `localhost:9000`
+2. Set your browser's startup page to `localhost:9000`. This is only the default port, you can change it by editing the [.env file](https://github.com/sodic/daily-article/blob/master/.env).
 
 Use `./uninstall.sh` for uninstalling.
 
